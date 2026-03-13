@@ -36,6 +36,12 @@ class Grafo:
         return texto
     
     def add_arista(self,n0,n1,type='Directed'):
-        arista = Arista(n0.id,n1.id,type)
+        par = (n0.id, n1.id)
+        if par in [(a.n0, a.n1) if a.n0 < a.n1 else (a.n1, a.n0) for a in self.aristas.values()]:
+            return  # ya existe, no agregar duplicado
+
+        arista = Arista(n0.id, n1.id, type)
         self.aristas[arista.id] = arista
+        
+        
 
