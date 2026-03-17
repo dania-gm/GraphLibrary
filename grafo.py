@@ -8,11 +8,6 @@ class Grafo:
         self.aristas = {}
         self.direccionado = direccionado
         
-    def add_nodo(self,nodo):
-        existe_nodo = self.nodos.get(nodo.id)
-        if existe_nodo is None:
-            self.nodos[nodo.id] = nodo
-    
     def get_grado(self):
         return len(self.nodos)
     
@@ -35,13 +30,28 @@ class Grafo:
                 texto += f'{arista.n0} {no_dirigido} {arista.n1}\n'
         return texto
     
-    def add_arista(self,n0,n1,type='Directed'):
-        par = (n0.id, n1.id)
-        if par in [(a.n0, a.n1) if a.n0 < a.n1 else (a.n1, a.n0) for a in self.aristas.values()]:
-            return  # ya existe, no agregar duplicado
-
-        arista = Arista(n0.id, n1.id, type)
-        self.aristas[arista.id] = arista
+    def calcular_cantidad_aristas(self):
+        nodos = self.nodos
+        #aristas_totales = (nodos ** 2)/2
+        aristas_totales = nodos*(nodos-1)/2
+        cantidad_aristas = aristas_totales * .1
+        return int(cantidad_aristas)
+    
+    def generar_aristas(self,grafo):
+        n_aristas = self.calcular_cantidad_aristas()
+        aristas = 0 
+        while aristas < n_aristas:
+            v1,v2 = self.elegir_vertices(grafo)
+            if v1.id != v2.id and not grafo.existe_arista(v1, v2):
+                grafo.add_arista(v1, v2)
+                aristas += 1
+    
+    def generar_nodos(self,grafo):
+        for i in range(self.nodos):
+            n = nodo.Nodo(i)
+            grafo.add_nodo(n)
+    
+    
         
         
 
