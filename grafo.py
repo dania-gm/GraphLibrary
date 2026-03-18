@@ -30,27 +30,44 @@ class Grafo:
                 texto += f'{arista.n0} {no_dirigido} {arista.n1}\n'
         return texto
     
-    def calcular_cantidad_aristas(self):
-        nodos = self.nodos
-        #aristas_totales = (nodos ** 2)/2
-        aristas_totales = nodos*(nodos-1)/2
-        cantidad_aristas = aristas_totales * .1
-        return int(cantidad_aristas)
+    def add_nodo(self,nodo):
+        existe_nodo = self.nodos.get(nodo.id)
+        if existe_nodo is None:
+            self.nodos[nodo.id] = nodo
+            
+    def add_arista(self, n0, n1, type='Directed'):
+        v0 = n0.id
+        v1 = n1.id
+        if self.existe_arista(v0,v1,type):
+             pass
+        else:
+            arista = Arista(v0, v1, type)
+            self.aristas[arista.id] = arista
     
-    def generar_aristas(self,grafo):
-        n_aristas = self.calcular_cantidad_aristas()
-        aristas = 0 
-        while aristas < n_aristas:
-            v1,v2 = self.elegir_vertices(grafo)
-            if v1.id != v2.id and not grafo.existe_arista(v1, v2):
-                grafo.add_arista(v1, v2)
-                aristas += 1
+    def existe_arista(self, n0, n1,type):
+        existe = None
+        
+        if type == 'Directed':
+            par_busqueda = (n0, n1)
+            existe = False
+            
+            for a in self.aristas.values():
+                if (a.n0, a.n1) == par_busqueda:
+                    existe = True
+                    break 
     
-    def generar_nodos(self,grafo):
-        for i in range(self.nodos):
-            n = nodo.Nodo(i)
-            grafo.add_nodo(n)
-    
+        else:
+            id_min = min(n0, n1)
+            id_max = max(n0, n1)
+            par_busqueda = (id_min, id_max)
+            existe = False
+            
+            for a in self.aristas.values():
+                if (min(a.n0,a.n1),max(a.n0,a.n1)) == par_busqueda:    
+                    existe = True
+                    break
+
+        return existe
     
         
         
