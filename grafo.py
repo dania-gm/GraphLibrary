@@ -1,5 +1,6 @@
 from nodo import Nodo
 from arista import Arista
+import random
 
 class Grafo:
     def __init__(self,direccionado=False):
@@ -7,13 +8,8 @@ class Grafo:
         self.nodos = {}
         self.aristas = {}
         self.direccionado = direccionado
+        self.grados = {}
         
-    def get_grado(self):
-        return len(self.nodos)
-    
-    def get_nodos(self):
-        pass
-    
     def __str__(self):
         dirigido = '-->'
         no_dirigido = '--'
@@ -34,6 +30,7 @@ class Grafo:
         existe_nodo = self.nodos.get(nodo.id)
         if existe_nodo is None:
             self.nodos[nodo.id] = nodo
+            self.grados[nodo.id] = 0
             
     def add_arista(self, n0, n1, type='Directed'):
         v0 = n0.id
@@ -43,6 +40,11 @@ class Grafo:
         else:
             arista = Arista(v0, v1, type)
             self.aristas[arista.id] = arista
+            self.grados[v0] += 1
+            self.grados[v1] += 1
+    
+    def get_grado(self, nodo_id):
+        return self.grados.get(nodo_id,0)
     
     def existe_arista(self, n0, n1,type):
         existe = None
@@ -68,6 +70,11 @@ class Grafo:
                     break
 
         return existe
+    
+    def randomArray(self,u):
+        arr = list(range(u))
+        random.shuffle(arr)
+        return arr
     
         
         

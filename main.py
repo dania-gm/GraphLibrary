@@ -49,35 +49,35 @@ def menu():
         print("6.- Malla (Grid)")
         print("0.- Salir")
         
-        opcion = input("\nIngrese el número del modelo: ")
-        match int(opcion):
-            case 1:
-                n = input("Ingrese el valor de n")
-                d = input("Ingrese el valor de d")
+        opcion = int(input("\nIngrese el número del modelo: "))
+        match opcion:
+            case 1: #Barabasi
+                n = int(input("Ingrese el valor de n: "))
+                d = int(input("Ingrese el valor de d: "))
                 generar_grafo(opcion,n,d)
-            case 2:
-                n = input("Ingrese el valor de n")
+            case 2: #Dorogovtsev
+                n = int(input("Ingrese el valor de n: "))
                 generar_grafo(opcion,n)
-            case 3:
-                n = input("Ingrese el valor de n")
-                m = input("Ingrese el valor de m")
+            case 3: #Erdos
+                n = int(input("Ingrese el valor de n: "))
+                m = int(input("Ingrese el valor de m: "))
                 generar_grafo(opcion,n,m)
-            case 4:
-                n = input("Ingrese el valor de n")
-                r = input("Ingrese el valor de r")
+            case 4: #Geográfico
+                n = int(input("Ingrese el valor de n: "))
+                r = float(input("Ingrese el valor de r (Entre 0 y 1): "))
                 generar_grafo(opcion,n,r)
-            case 5:
-                n = input("Ingrese el valor de n")
-                p = input("Ingrese el valor de p")
+            case 5: #Gilbert
+                n = int(input("Ingrese el valor de n: "))
+                p = float(input("Ingrese el valor de p (Entre 0 y 1): "))
                 generar_grafo(opcion,n,p)
-            case 6:
-                filas = input("Ingrese el valor de filas")
-                columnas = input("Ingrese el valor de columnas")
+            case 6: #Malla
+                filas = int(input("Ingrese el valor de filas: "))
+                columnas = int(input("Ingrese el valor de columnas: "))
                 generar_grafo(opcion,filas,columnas)
             case 0:
                 break        
         print("Grafo generado, puedes encontrar el archivo .dot en la carpeta del modelo")
-        preguntar = input('Ingresa un 1 si quieres continuar, 0 si no')
+        preguntar = int(input('Ingresa un 1 si quieres continuar, 0 si no'))
         if preguntar == 1:
             continuar = True
         else:

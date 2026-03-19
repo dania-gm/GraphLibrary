@@ -4,9 +4,9 @@ class Nodo:
         self.atr = {
             'aristas': [],
             'nodos_vecinos': [],
-            'x': None,
-            'y': None
         }
+        self.x = 0  
+        self.y = 0  
     
     def get_nodo(self):
         print(self.id)

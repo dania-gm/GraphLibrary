@@ -38,7 +38,7 @@ def exportar_gfd(grafo,modelo,nodos):
     with open(archivo,'w') as f:
         f.write(f'{tipo_grafo} G {{\n')
         for nodo in grafo.nodos.values():
-            f.write(f'    {nodo.id};\n')
+            f.write(f'    {nodo.id}[pos="{nodo.x},{nodo.y}!"];\n')
         for arista in grafo.aristas.values():
             f.write(f'{arista.n0} {conector} {arista.n1};\n')
         f.write('}\n')
