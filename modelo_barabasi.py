@@ -1,6 +1,6 @@
 import random
-from nodo import Nodo
-from grafo import Grafo
+from node import Nodo
+from graph import Grafo
 
 def grafoBarabasiAlbert(n, d):
     if d >= n:

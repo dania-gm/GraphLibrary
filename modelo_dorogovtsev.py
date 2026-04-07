@@ -1,7 +1,7 @@
 import random
-from nodo import Nodo
-from arista import Arista
-from grafo import Grafo
+from node import Nodo
+from edge import Arista
+from graph import Grafo
 
 def grafoDorogovtsevMendes(n, dirigido=False):
     """

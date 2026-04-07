@@ -1,5 +1,5 @@
-from nodo import Nodo
-from grafo import Grafo
+from node import Nodo
+from graph import Grafo
 
 def generar_malla(filas, columnas):
     grafo = Grafo()

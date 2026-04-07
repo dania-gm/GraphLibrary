@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:gexf xmlns:ns0="http://www.gexf.net/1.2draft" xmlns:ns1="http://www.gexf.net/1.2draft/viz" version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz">
+  <ns0:graph defaultedgetype="undirected">
+    <ns0:nodes>
+      <ns0:node id="1" label="1">
+        <ns1:position x="378.78" y="620.22" z="0.0" />
+      </ns0:node>
+      <ns0:node id="2" label="2">
+        <ns1:position x="441.92" y="398.32" z="0.0" />
+      </ns0:node>
+      <ns0:node id="3" label="3">
+        <ns1:position x="557.49" y="33.60" z="0.0" />
+      </ns0:node>
+      <ns0:node id="4" label="4">
+        <ns1:position x="671.96" y="212.35" z="0.0" />
+      </ns0:node>
+      <ns0:node id="5" label="5">
+        <ns1:position x="983.56" y="325.27" z="0.0" />
+      </ns0:node>
+      <ns0:node id="6" label="6">
+        <ns1:position x="545.07" y="355.44" z="0.0" />
+      </ns0:node>
+      <ns0:node id="7" label="7">
+        <ns1:position x="293.89" y="153.99" z="0.0" />
+      </ns0:node>
+      <ns0:node id="8" label="8">
+        <ns1:position x="203.99" y="460.77" z="0.0" />
+      </ns0:node>
+      <ns0:node id="9" label="9">
+        <ns1:position x="115.00" y="498.90" z="0.0" />
+      </ns0:node>
+      <ns0:node id="10" label="10">
+        <ns1:position x="793.86" y="71.64" z="0.0" />
+      </ns0:node>
+      <ns0:node id="11" label="11">
+        <ns1:position x="613.47" y="346.80" z="0.0" />
+      </ns0:node>
+      <ns0:node id="12" label="12">
+        <ns1:position x="743.34" y="709.37" z="0.0" />
+      </ns0:node>
+      <ns0:node id="13" label="13">
+        <ns1:position x="549.46" y="559.17" z="0.0" />
+      </ns0:node>
+      <ns0:node id="14" label="14">
+        <ns1:position x="722.20" y="666.14" z="0.0" />
+      </ns0:node>
+      <ns0:node id="15" label="15">
+        <ns1:position x="929.38" y="662.74" z="0.0" />
+      </ns0:node>
+      <ns0:node id="16" label="16">
+        <ns1:position x="970.77" y="920.24" z="0.0" />
+      </ns0:node>
+      <ns0:node id="17" label="17">
+        <ns1:position x="15.46" y="444.19" z="0.0" />
+      </ns0:node>
+      <ns0:node id="18" label="18">
+        <ns1:position x="822.44" y="181.16" z="0.0" />
+      </ns0:node>
+      <ns0:node id="19" label="19">
+        <ns1:position x="20.97" y="215.99" z="0.0" />
+      </ns0:node>
+      <ns0:node id="20" label="20">
+        <ns1:position x="627.78" y="304.88" z="0.0" />
+      </ns0:node>
+      <ns0:node id="21" label="21">
+        <ns1:position x="956.50" y="740.68" z="0.0" />
+      </ns0:node>
+      <ns0:node id="22" label="22">
+        <ns1:position x="865.20" y="435.32" z="0.0" />
+      </ns0:node>
+      <ns0:node id="23" label="23">
+        <ns1:position x="375.87" y="331.24" z="0.0" />
+      </ns0:node>
+      <ns0:node id="24" label="24">
+        <ns1:position x="901.99" y="181.34" z="0.0" />
+      </ns0:node>
+      <ns0:node id="25" label="25">
+        <ns1:position x="276.52" y="867.10" z="0.0" />
+      </ns0:node>
+      <ns0:node id="26" label="26">
+        <ns1:position x="700.46" y="130.60" z="0.0" />
+      </ns0:node>
+      <ns0:node id="27" label="27">
+        <ns1:position x="676.32" y="147.12" z="0.0" />
+      </ns0:node>
+      <ns0:node id="28" label="28">
+        <ns1:position x="573.63" y="888.52" z="0.0" />
+      </ns0:node>
+      <ns0:node id="29" label="29">
+        <ns1:position x="626.57" y="646.33" z="0.0" />
+      </ns0:node>
+      <ns0:node id="30" label="30">
+        <ns1:position x="396.27" y="593.61" z="0.0" />
+      </ns0:node>
+      <ns0:node id="31" label="31">
+        <ns1:position x="235.48" y="449.75" z="0.0" />
+      </ns0:node>
+      <ns0:node id="32" label="32">
+        <ns1:position x="71.47" y="315.16" z="0.0" />
+      </ns0:node>
+      <ns0:node id="33" label="33">
+        <ns1:position x="435.63" y="181.57" z="0.0" />
+      </ns0:node>
+      <ns0:node id="34" label="34">
+        <ns1:position x="659.12" y="350.54" z="0.0" />
+      </ns0:node>
+      <ns0:node id="35" label="35">
+        <ns1:position x="579.50" y="86.63" z="0.0" />
+      </ns0:node>
+      <ns0:node id="36" label="36">
+        <ns1:position x="348.44" y="10.02" z="0.0" />
+      </ns0:node>
+      <ns0:node id="37" label="37">
+        <ns1:position x="150.36" y="253.07" z="0.0" />
+      </ns0:node>
+      <ns0:node id="38" label="38">
+        <ns1:position x="231.01" y="131.77" z="0.0" />
+      </ns0:node>
+      <ns0:node id="39" label="39">
+        <ns1:position x="421.48" y="343.73" z="0.0" />
+      </ns0:node>
+      <ns0:node id="40" label="40">
+        <ns1:position x="309.02" y="648.45" z="0.0" />
+      </ns0:node>
+      <ns0:node id="41" label="41">
+        <ns1:position x="431.11" y="747.68" z="0.0" />
+      </ns0:node>
+      <ns0:node id="42" label="42">
+        <ns1:position x="133.47" y="910.19" z="0.0" />
+      </ns0:node>
+      <ns0:node id="43" label="43">
+        <ns1:position x="607.87" y="485.47" z="0.0" />
+      </ns0:node>
+      <ns0:node id="44" label="44">
+        <ns1:position x="135.22" y="795.76" z="0.0" />
+      </ns0:node>
+      <ns0:node id="45" label="45">
+        <ns1:position x="380.40" y="843.44" z="0.0" />
+      </ns0:node>
+      <ns0:node id="46" label="46">
+        <ns1:position x="910.93" y="900.06" z="0.0" />
+      </ns0:node>
+      <ns0:node id="47" label="47">
+        <ns1:position x="673.18" y="693.95" z="0.0" />
+      </ns0:node>
+      <ns0:node id="48" label="48">
+        <ns1:position x="393.44" y="991.37" z="0.0" />
+      </ns0:node>
+      <ns0:node id="49" label="49">
+        <ns1:position x="224.82" y="783.42" z="0.0" />
+      </ns0:node>
+      <ns0:node id="50" label="50">
+        <ns1:position x="963.32" y="221.49" z="0.0" />
+      </ns0:node>
+    </ns0:nodes>
+    <ns0:edges>
+      <ns0:edge id="0" source="1" target="30" />
+      <ns0:edge id="1" source="1" target="40" />
+      <ns0:edge id="2" source="2" target="23" />
+      <ns0:edge id="3" source="2" target="39" />
+      <ns0:edge id="4" source="3" target="35" />
+      <ns0:edge id="5" source="4" target="26" />
+      <ns0:edge id="6" source="4" target="27" />
+      <ns0:edge id="7" source="6" target="11" />
+      <ns0:edge id="8" source="6" target="20" />
+      <ns0:edge id="9" source="7" target="38" />
+      <ns0:edge id="10" source="8" target="9" />
+      <ns0:edge id="11" source="8" target="31" />
+      <ns0:edge id="12" source="11" target="20" />
+      <ns0:edge id="13" source="11" target="34" />
+      <ns0:edge id="14" source="12" target="14" />
+      <ns0:edge id="15" source="12" target="47" />
+      <ns0:edge id="16" source="13" target="43" />
+      <ns0:edge id="17" source="14" target="29" />
+      <ns0:edge id="18" source="14" target="47" />
+      <ns0:edge id="19" source="15" target="21" />
+      <ns0:edge id="20" source="16" target="46" />
+      <ns0:edge id="21" source="18" target="24" />
+      <ns0:edge id="22" source="20" target="34" />
+      <ns0:edge id="23" source="23" target="39" />
+      <ns0:edge id="24" source="24" target="50" />
+      <ns0:edge id="25" source="25" target="49" />
+      <ns0:edge id="26" source="26" target="27" />
+      <ns0:edge id="27" source="29" target="47" />
+      <ns0:edge id="28" source="44" target="49" />
+    </ns0:edges>
+  </ns0:graph>
+</ns0:gexf>
