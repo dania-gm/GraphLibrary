@@ -89,4 +89,37 @@ def generar_geografico_simple(n,r,tipo):
                if tipo == 'Directed':
                    g.add_edge(n_2.id,n_1.id)
     return g
+
+def generar_malla(n,m,tipo):
+    if n<1 or m<1:
+        raise ValueError('n y m deben ser >=1')
+    g = Graph(tipo)
+    
+    for i in range(n):
+        for j in range(m):
+            node_id = i * m + j + 1
+            g.add_node(node_id)
+            g.nodes[node_id].position['x'] = j/(m-1) if m>1 else 0.5
+            g.nodes[node_id].position['y'] = i/(n-1) if n>1 else 0.5
+            
+    # 8 direcciones
+    direcciones = [(-1,-1), (-1,0), (-1,1),
+                   (0,-1),          (0,1),
+                   (1,-1),  (1,0),  (1,1)]
+    
+    # Conectar cada nodo con sus vecinos válidos
+    for i in range(n):
+        for j in range(m):
+            node_id = i * m + j + 1
+            for di, dj in direcciones:
+                ni, nj = i + di, j + dj
+                if 0 <= ni < n and 0 <= nj < m:
+                    neighbor_id = ni * m + nj + 1
+                    if node_id < neighbor_id:
+                        g.add_edge(node_id, neighbor_id)
+                        if tipo == 'Directed':
+                            g.add_edge(neighbor_id, node_id)
+    
+    return g
+
     

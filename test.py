@@ -79,3 +79,46 @@ import os
 # tree = ET.ElementTree(gexf)
 # ET.indent(tree, space="  ")  # Python 3.9+
 # tree.write(ruta, encoding="utf-8", xml_declaration=True)
+
+import xml.etree.ElementTree as ET
+import os
+
+n = 50
+m = 10
+g = generar_malla(n,m,'Undirected')
+nombre_archivo = 'Malla500.gexf'
+ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/modelo_malla/files', nombre_archivo)
+# 🔹 Namespaces oficiales de GEXF 1.2
+NS  = "{http://www.gexf.net/1.2draft}"
+VIZ = "{http://www.gexf.net/1.2draft/viz}"
+
+# Raíz del documento
+gexf = ET.Element(f"{NS}gexf", version="1.2")
+gexf.set("xmlns:viz", "http://www.gexf.net/1.2draft/viz")
+
+# Elemento <graph>
+edge_type = "directed" if g.tipo == "Directed" else "undirected"
+graph = ET.SubElement(gexf, f"{NS}graph", defaultedgetype=edge_type)
+
+# 🔹 Nodos con posición X/Y
+nodes_el = ET.SubElement(graph, f"{NS}nodes")
+for nodo in g.nodes.values():
+    node = ET.SubElement(nodes_el, f"{NS}node", id=str(nodo.id), label=str(nodo.id))
+    if hasattr(nodo, "position"):
+        # Escalamos a [0, 1000] para que Gephi los renderice correctamente
+        x = nodo.position.get("x", 0.5) * 1000
+        y = nodo.position.get("y", 0.5) * 1000
+        ET.SubElement(node, f"{VIZ}position", x=f"{x:.2f}", y=f"{y:.2f}", z="0.0")
+
+# 🔹 Aristas
+edges_el = ET.SubElement(graph, f"{NS}edges")
+for i, arista in enumerate(g.edges.values()):
+    ET.SubElement(edges_el, f"{NS}edge", 
+                  id=str(i), 
+                  source=str(arista.n0.id), 
+                  target=str(arista.n1.id))
+
+# Guardar archivo con indentación legible
+tree = ET.ElementTree(gexf)
+ET.indent(tree, space="  ")  # Python 3.9+
+tree.write(ruta, encoding="utf-8", xml_declaration=True)
