@@ -122,4 +122,52 @@ def generar_malla(n,m,tipo):
     
     return g
 
+def generar_barabasi(n,d,tipo):
+    if n < d:
+        raise ValueError('n debe ser mayor que d')
+    g = Graph(tipo)
+    
+    #Primeros d nodos conectados
+    for i in range(1,d+1):
+        g.add_node(i)
+        
+    #conectar todos los nodos entre si
+    for i in range(1,d+1):
+        for j in range(i+1,d+1):
+            g.add_edge(i,j)
+    
+    for nuevo in range(d+1,n+1):
+        g.add_node(nuevo)
+        conexiones = 0
+        intentos = 0
+        max_intentos = 10000
+        vecinos_conectados = set()
+        
+        while conexiones < d and intentos < max_intentos:
+            intentos += 1
+            
+            candidato_vecino = random.randint(1,nuevo-1)
+            if candidato_vecino in vecinos_conectados:
+                continue
+            
+            deg = g.nodes[candidato_vecino].deg()
+            p = 1 - (deg / d)
+            #mantener rango [0,1] 
+            p=max(0.0,min(1.0,p)) 
+            
+            if random.random() < p:
+                g.add_edge(nuevo,candidato_vecino)
+                vecinos_conectados.add(candidato_vecino)
+                conexiones += 1
+        
+        #garantizar que todos los nodos tengan d aristas
+        while conexiones < d:
+            candidato_vecino = random.randint(1,nuevo-1)
+            if candidato_vecino not in vecinos_conectados:
+                g.add_edge(nuevo,candidato_vecino)
+                vecinos_conectados.add(candidato_vecino)
+                conexiones += 1
+    return g
+    
+
     
