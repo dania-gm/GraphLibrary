@@ -6,6 +6,7 @@ class Node:
             'x':x,
             'y':y
         }
+        self.nivel = 0
  
     def get_node(self):
         print(self.id)

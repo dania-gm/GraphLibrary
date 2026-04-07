@@ -4,7 +4,7 @@ import random
 import math
 from itertools import combinations, permutations
 
-@st.cache_data
+
 def generar_erdos_renyi(n, m, tipo='Undirected'):
     #Validar entradas
     if n < 1 or m < 0:

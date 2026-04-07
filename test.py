@@ -1,5 +1,8 @@
 from algoritmos_generacion import *
 import os
+import networkx as nx
+import xml.etree.ElementTree as ET
+from node import Node
 
 # n = 500
 # p = 0.1
@@ -141,19 +144,125 @@ import os
 # with open(ruta, 'w', encoding='utf-8') as f:
 #     f.write('\n'.join(lineas) + '\n')
 
-n=500
-g= generar_dorogovtsev(n)
-nombre_archivo = 'Dorogovtsev500.dot'
-ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/modelo_dorogovtsev/files', nombre_archivo)
-conector = '->' if g.tipo == 'Directed' else '--'
-tipo = 'digraph' if g.tipo == 'Directed' else 'graph'
-lineas = [f'{tipo} G {{']
-for nodo in g.nodes.values():
-    lineas.append(f'    {nodo.id};')
+# n=500
+# g= generar_dorogovtsev(n)
+# nombre_archivo = 'Dorogovtsev500.dot'
+# ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/modelo_dorogovtsev/files', nombre_archivo)
+# conector = '->' if g.tipo == 'Directed' else '--'
+# tipo = 'digraph' if g.tipo == 'Directed' else 'graph'
+# lineas = [f'{tipo} G {{']
+# for nodo in g.nodes.values():
+#     lineas.append(f'    {nodo.id};')
     
-for arista in g.edges.values():
-     lineas.append(f'    {arista.n0.id} {conector} {arista.n1.id};')
+# for arista in g.edges.values():
+#      lineas.append(f'    {arista.n0.id} {conector} {arista.n1.id};')
 
-lineas.append('}')
-with open(ruta, 'w', encoding='utf-8') as f:
-    f.write('\n'.join(lineas) + '\n')
+# lineas.append('}')
+# with open(ruta, 'w', encoding='utf-8') as f:
+#     f.write('\n'.join(lineas) + '\n')
+ 
+
+
+    
+# n=500
+# m=490
+# g = generar_erdos_renyi(n,m)
+# nombre_archivo = 'GrafoOriginal_500.gexf'
+# ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/BFS/Grafo500', nombre_archivo)
+# # 🔹 Namespaces oficiales de GEXF 1.2
+# NS  = "{http://www.gexf.net/1.2draft}"
+# VIZ = "{http://www.gexf.net/1.2draft/viz}"
+
+# # 🔹 Namespace oficial GEXF 1.2 (solo el principal, sin VIZ)
+# NS = "{http://www.gexf.net/1.2draft}"
+
+# # Raíz del documento
+# gexf = ET.Element(f"{NS}gexf", version="1.2")
+
+# # Elemento <graph>
+# edge_type = "directed" if g.tipo == "Directed" else "undirected"
+# graph = ET.SubElement(gexf, f"{NS}graph", defaultedgetype=edge_type)
+
+# # 🔹 Nodos: id (interno) + label (visible en Gephi)
+# nodes_el = ET.SubElement(graph, f"{NS}nodes")
+# for nodo in g.nodes.values():
+#     # ✅ CLAVE: label=str(nodo.id) hace que Gephi muestre el ID sobre el círculo
+#     ET.SubElement(nodes_el, f"{NS}node", 
+#                   id=str(nodo.id), 
+#                   label=str(nodo.id))
+
+# # 🔹 Aristas
+# edges_el = ET.SubElement(graph, f"{NS}edges")
+# for i, arista in enumerate(g.edges.values()):
+#     u = arista.n0.id if isinstance(arista.n0, Node) else arista.n0
+#     v = arista.n1.id if isinstance(arista.n1, Node) else arista.n1
+#     ET.SubElement(edges_el, f"{NS}edge", 
+#                   id=str(i), 
+#                   source=str(u), 
+#                   target=str(v))
+
+# # Guardar archivo
+# tree = ET.ElementTree(gexf)
+# if hasattr(ET, 'indent'):  # Python 3.9+
+#     ET.indent(tree, space="  ")
+# tree.write(ruta, encoding="utf-8", xml_declaration=True)
+
+# #prueba BFS
+
+# gn = g.BFS(3)
+# nombre_archivo = 'GrafoBFS_500.gexf'
+# ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/BFS/Grafo500', nombre_archivo)
+# # 🔹 Namespace oficial GEXF 1.2
+# NS = "{http://www.gexf.net/1.2draft}"
+
+# # Raíz del documento
+# gexf = ET.Element(f"{NS}gexf", version="1.2")
+
+# # Elemento <graph>
+# edge_type = "directed" if gn.tipo == "Directed" else "undirected"
+# graph = ET.SubElement(gexf, f"{NS}graph", defaultedgetype=edge_type)
+
+# # 🔥 1. DEFINIR ATRIBUTO "nivel"
+# attributes = ET.SubElement(graph, f"{NS}attributes", {"class": "node"})
+
+# ET.SubElement(attributes, f"{NS}attribute", {
+#     "id": "nivel",
+#     "title": "nivel",
+#     "type": "integer"
+# })
+
+# # 🔹 Nodos
+# nodes_el = ET.SubElement(graph, f"{NS}nodes")
+
+# for nodo in gn.nodes.values():
+#     node_el = ET.SubElement(nodes_el, f"{NS}node",
+#                             id=str(nodo.id),
+#                             label=str(nodo.id))
+
+#     # 🔥 2. ASIGNAR VALOR DEL ATRIBUTO
+#     attvalues = ET.SubElement(node_el, f"{NS}attvalues")
+
+#     ET.SubElement(attvalues, f"{NS}attvalue", {
+#         "for": "nivel",
+#         "value": str(getattr(nodo, "nivel", -1))  # por si no existe
+#     })
+
+# # 🔹 Aristas
+# edges_el = ET.SubElement(graph, f"{NS}edges")
+
+# for i, arista in enumerate(gn.edges.values()):
+#     u = arista.n0.id if isinstance(arista.n0, Node) else arista.n0
+#     v = arista.n1.id if isinstance(arista.n1, Node) else arista.n1
+
+#     ET.SubElement(edges_el, f"{NS}edge",
+#                   id=str(i),
+#                   source=str(u),
+#                   target=str(v))
+
+# # Guardar archivo
+# tree = ET.ElementTree(gexf)
+
+# if hasattr(ET, 'indent'):  # Python 3.9+
+#     ET.indent(tree, space="  ")
+
+# tree.write(ruta, encoding="utf-8", xml_declaration=True)
