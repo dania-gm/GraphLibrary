@@ -5,7 +5,7 @@ import math
 from itertools import combinations, permutations
 
 @st.cache_data
-def generar_erdos_renyi(n, m, tipo):
+def generar_erdos_renyi(n, m, tipo='Undirected'):
     #Validar entradas
     if n < 1 or m < 0:
         raise ValueError('n debe ser >= 1 y m>= 0')
@@ -37,7 +37,7 @@ def generar_erdos_renyi(n, m, tipo):
             g.add_edge(n1,n2)
     return g
 
-def generar_gilbert(n,p,tipo):
+def generar_gilbert(n,p,tipo='Undirected'):
     if not (0.0 <= p <= 1.0):
         raise ValueError('p debe estar entre 0.0 y 1.0')
     g = Graph(tipo)
@@ -56,7 +56,7 @@ def generar_gilbert(n,p,tipo):
     
     return g
     
-def generar_geografico_simple(n,r,tipo):
+def generar_geografico_simple(n,r,tipo='Undirected'):
     if r <= 0.0:
         raise ValueError('r debe ser mayor a 0.0')
     if r > math.sqrt(2):
@@ -90,7 +90,7 @@ def generar_geografico_simple(n,r,tipo):
                    g.add_edge(n_2.id,n_1.id)
     return g
 
-def generar_malla(n,m,tipo):
+def generar_malla(n,m,tipo='Undirected'):
     if n<1 or m<1:
         raise ValueError('n y m deben ser >=1')
     g = Graph(tipo)
@@ -122,7 +122,7 @@ def generar_malla(n,m,tipo):
     
     return g
 
-def generar_barabasi(n,d,tipo):
+def generar_barabasi(n,d,tipo='Undirected'):
     if n < d:
         raise ValueError('n debe ser mayor que d')
     g = Graph(tipo)
@@ -168,6 +168,35 @@ def generar_barabasi(n,d,tipo):
                 vecinos_conectados.add(candidato_vecino)
                 conexiones += 1
     return g
+
+def generar_dorogovtsev(n,tipo='Undirected'):
+    if n < 3:
+        raise ValueError('n debe ser >= 3')
     
+    g=Graph(tipo)
+    
+    lista_nodos = []
+    #Crear 3 nodos iniciales
+    for i in range(1,4):
+        g.add_node(i)
+    
+    
+    #Crear 3 aristas iniciales
+    g.add_edge(1, 2)
+    g.add_edge(2, 3)
+    g.add_edge(3, 1)
+    
+    for i in range(4, n+1):
+        g.add_node(i)
+
+        arista_seleccionada = random.choice(list(g.edges.values()))
+        
+        nodo_extremo1 = arista_seleccionada.n0.id
+        nodo_extremo2 = arista_seleccionada.n1.id
+        
+        g.add_edge(i, nodo_extremo1)
+        g.add_edge(i, nodo_extremo2)
+
+    return g
 
     

@@ -123,11 +123,28 @@ import os
 # ET.indent(tree, space="  ")  # Python 3.9+
 # tree.write(ruta, encoding="utf-8", xml_declaration=True)
 
+# n=500
+# d=3
+# g= generar_barabasi(n,d,'Undirected')
+# nombre_archivo = 'Barabasi500.dot'
+# ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/modelo_barabasi/files', nombre_archivo)
+# conector = '->' if g.tipo == 'Directed' else '--'
+# tipo = 'digraph' if g.tipo == 'Directed' else 'graph'
+# lineas = [f'{tipo} G {{']
+# for nodo in g.nodes.values():
+#     lineas.append(f'    {nodo.id};')
+    
+# for arista in g.edges.values():
+#      lineas.append(f'    {arista.n0.id} {conector} {arista.n1.id};')
+
+# lineas.append('}')
+# with open(ruta, 'w', encoding='utf-8') as f:
+#     f.write('\n'.join(lineas) + '\n')
+
 n=500
-d=3
-g= generar_barabasi(n,d,'Undirected')
-nombre_archivo = 'Barabasi500.dot'
-ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/modelo_barabasi/files', nombre_archivo)
+g= generar_dorogovtsev(n)
+nombre_archivo = 'Dorogovtsev500.dot'
+ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/modelo_dorogovtsev/files', nombre_archivo)
 conector = '->' if g.tipo == 'Directed' else '--'
 tipo = 'digraph' if g.tipo == 'Directed' else 'graph'
 lineas = [f'{tipo} G {{']
