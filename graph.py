@@ -118,16 +118,41 @@ class Graph:
         g = Graph.to_grafo(dict_ady,self.tipo)
         for nodo in g.nodes.values():
             nodo.nivel = nivel.get(nodo.id, -1)
-            
-        for nodo in g.nodes.values():
-            print(nodo.id, nodo.nivel)
+
         return g               
         
-                      
-        
-    
     def DFS_R(self,s):
-        pass
+        visitado = set()
+        aristas_dfs = []
+        dict_ady = self.dict_adyacencia()
+        niveles = {}
+        def dfs_recursivo(u,nivel_actual=0):
+            visitado.add(u)
+            niveles[u]= nivel_actual
+            for vecino in dict_ady.get(u,[]):
+                if vecino not in visitado:
+                    aristas_dfs.append((u,vecino))
+                    dfs_recursivo(vecino, nivel_actual + 1)
+        
+        if s is not None and s in self.nodes:
+            dfs_recursivo(s)
+            
+        for nodo_id in self.nodes.keys():
+            if nodo_id not in visitado:
+                dfs_recursivo(nodo_id)
+                
+        dfs_adj = {n:[] for n in visitado}
+        for u,v in aristas_dfs:
+            dfs_adj[u].append(v)
+            if self.tipo == 'Undirected':
+                dfs_adj[v].append(u)
+                
+        g = Graph.to_grafo(dfs_adj,self.tipo)
+        for nodo in g.nodes.values():
+            nodo.nivel = niveles.get(nodo.id, -1)
+
+        return g   
+            
     
     def DFS_I(self,s):
         pass        
