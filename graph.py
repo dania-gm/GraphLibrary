@@ -155,4 +155,40 @@ class Graph:
             
     
     def DFS_I(self,s):
-        pass        
+        visitado = set()
+        aristas_dfs = []
+        dict_ady = self.dict_adyacencia()    
+        niveles = {}
+        
+        def dfs_iterativo(u):
+            pila = [(u,0)]
+            visitado.add(u)
+            niveles[u] = 0
+            
+            while pila:
+                u, nivel_actual = pila.pop()
+                for vecino in reversed(dict_ady.get(u,[])):
+                    if vecino not in visitado:
+                        visitado.add(vecino)
+                        niveles[vecino] = nivel_actual + 1
+                        aristas_dfs.append((u,vecino))
+                        pila.append((vecino,nivel_actual+1))
+                        
+        if s is not None and s in self.nodes:
+            dfs_iterativo(s)
+            
+        for nodo_id in self.nodes.keys():
+            if nodo_id not in visitado:
+                dfs_iterativo(nodo_id)
+        
+        dfs_adj = {n:[] for n in visitado}
+        for u,v in aristas_dfs:
+            dfs_adj[u].append(v)
+            if self.tipo == 'Undirected':
+                dfs_adj[v].append(u)
+                
+        g = Graph.to_grafo(dfs_adj,self.tipo)
+        for nodo in g.nodes.values():
+            nodo.nivel = niveles.get(nodo.id, -1)
+
+        return g     

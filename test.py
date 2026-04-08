@@ -164,11 +164,11 @@ from node import Node
 
 
     
-n=500
-m=490
+n=30
+m=25
 g = generar_erdos_renyi(n,m)
-nombre_archivo = 'GrafoOriginal_500.gexf'
-ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/DFS_R/Grafo500/files', nombre_archivo)
+nombre_archivo = 'GrafoOriginal_30.gexf'
+ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/DFS_I/Grafo30/files', nombre_archivo)
 # 🔹 Namespaces oficiales de GEXF 1.2
 NS  = "{http://www.gexf.net/1.2draft}"
 VIZ = "{http://www.gexf.net/1.2draft/viz}"
@@ -209,9 +209,9 @@ tree.write(ruta, encoding="utf-8", xml_declaration=True)
 
 #prueba BFS
 
-gn = g.DFS_R(3)
-nombre_archivo = 'GrafoDFSR_500.gexf'
-ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/DFS_R/Grafo500/files', nombre_archivo)
+gn = g.DFS_I(3)
+nombre_archivo = 'GrafoDFSI_30.gexf'
+ruta = os.path.join('/Users/daniagarcia/Documents/biblioteca_grafos/DFS_I/Grafo30/files', nombre_archivo)
 # 🔹 Namespace oficial GEXF 1.2
 NS = "{http://www.gexf.net/1.2draft}"
 
