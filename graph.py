@@ -103,9 +103,14 @@ class Graph:
         dict_ady = self.dict_adyacencia()
         visitado = set()
         nivel = {}
+        
+        dict_ady_bfs = {}
+        
         cola = deque([s])
         visitado.add(s)
         nivel[s] = 0
+        dict_ady_bfs[s] = [] #inicializa el nodo ráiz
+        
         
         while cola: #este llena
             n = cola.popleft()
@@ -115,7 +120,17 @@ class Graph:
                     visitado.add(vecino)
                     cola.append(vecino)
                     nivel[vecino] = nivel[n] + 1
-        g = Graph.to_grafo(dict_ady,self.tipo)
+                    
+                    # Aristas de descubrimiento
+                    if n not in dict_ady_bfs:
+                        dict_ady_bfs[n] = []
+                        dict_ady_bfs[n].append(vecino)
+                
+                    # Asegurar que el vecino exista en el diccionario
+                    if vecino not in dict_ady_bfs:
+                        dict_ady_bfs[vecino] = []
+                        
+        g = Graph.to_grafo(dict_ady_bfs,self.tipo)
         for nodo in g.nodes.values():
             nodo.nivel = nivel.get(nodo.id, -1)
 
@@ -137,10 +152,6 @@ class Graph:
         if s is not None and s in self.nodes:
             dfs_recursivo(s)
             
-        for nodo_id in self.nodes.keys():
-            if nodo_id not in visitado:
-                dfs_recursivo(nodo_id)
-                
         dfs_adj = {n:[] for n in visitado}
         for u,v in aristas_dfs:
             dfs_adj[u].append(v)
@@ -160,26 +171,25 @@ class Graph:
         dict_ady = self.dict_adyacencia()    
         niveles = {}
         
-        def dfs_iterativo(u):
-            pila = [(u,0)]
-            visitado.add(u)
-            niveles[u] = 0
+        def dfs_iterativo(inicio):
+            pila = [(inicio, None, 0)]
             
             while pila:
-                u, nivel_actual = pila.pop()
-                for vecino in reversed(dict_ady.get(u,[])):
-                    if vecino not in visitado:
-                        visitado.add(vecino)
-                        niveles[vecino] = nivel_actual + 1
-                        aristas_dfs.append((u,vecino))
-                        pila.append((vecino,nivel_actual+1))
+                u, padre, nivel_actual = pila.pop()
+                if u not in visitado:
+                    visitado.add(u)
+                    niveles[u] = nivel_actual
+                    
+                    if padre is not None:
+                        aristas_dfs.append((padre, u))
+                        
+                    for vecino in reversed(dict_ady.get(u,[])):
+                        if vecino not in visitado:
+                            pila.append((vecino,u,nivel_actual+1))
                         
         if s is not None and s in self.nodes:
             dfs_iterativo(s)
             
-        for nodo_id in self.nodes.keys():
-            if nodo_id not in visitado:
-                dfs_iterativo(nodo_id)
         
         dfs_adj = {n:[] for n in visitado}
         for u,v in aristas_dfs:
