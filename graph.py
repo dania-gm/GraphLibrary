@@ -281,4 +281,154 @@ class Graph:
                 g_dijkstra.add_edge(id_padre_con_dist, id_hijo_con_dist, peso=peso_original)
 
         return g_dijkstra
+    
+    def KruskalD(self):
+        if self.tipo != 'Undirected':
+            raise ValueError('El algoritmo de Kruskal se aplica típicamente a grafos no dirigidos')
         
+        mst_graph = Graph(tipo='Undirected')
+        for node_id in self.nodes:
+            mst_graph.add_node(node_id)
+            
+        parent = {node_id: node_id for node_id in self.nodes}
+        rank = {node_id: 0 for node_id in self.nodes}
+        
+        def find(item):
+            if parent[item] != item:
+                parent[item] = find(parent[item])
+            return parent[item]
+        
+        def union(item1,item2):
+            root1 = find(item1)
+            root2 = find(item2)
+            if root1 != root2:
+                if rank[root1] > rank[root2]:
+                    parent[root2] = root1
+                elif rank[root1] < rank[root2]:
+                    parent[root1] = root2
+                else:
+                    parent[root2] = root1
+                    rank[root1] += 1
+                return True
+            return False
+
+        aristas_ordenadas = sorted(self.edges.values(), key=lambda edge: edge.peso)
+
+        costo_total = 0
+        aristas_añadidas = 0
+        num_nodos = len(self.nodes)
+
+        for edge in aristas_ordenadas:
+            u_id = edge.n0.id
+            v_id = edge.n1.id
+
+            if union(u_id, v_id):
+                mst_graph.add_edge(u_id, v_id, peso=edge.peso)
+                costo_total += edge.peso
+                aristas_añadidas += 1
+
+                if aristas_añadidas == num_nodos - 1:
+                    break
+
+        return mst_graph, costo_total
+
+    def KruskalI(self):
+        if self.tipo != 'Undirected':
+            raise ValueError("El algoritmo de Kruskal Inverso se aplica a grafos no dirigidos.")
+
+        # 1. Clonar el grafo original por completo
+        mst_graph = Graph(tipo='Undirected')
+        for node_id in self.nodes:
+            mst_graph.add_node(node_id)
+            mst_graph.nodes[node_id].position = self.nodes[node_id].position.copy()
+            
+        for edge in self.edges.values():
+            mst_graph.add_edge(edge.n0.id, edge.n1.id, peso=edge.peso)
+
+        # 2. Ordenar las aristas de MAYOR a MENOR peso
+        aristas_ordenadas = sorted(list(mst_graph.edges.values()), key=lambda edge: edge.peso, reverse=True)
+
+        # 3. Evaluar el borrado de cada arista
+        for edge in aristas_ordenadas:
+            u_id = edge.n0.id
+            v_id = edge.n1.id
+            edge_id = edge.id
+            
+            # Guardamos la referencia del objeto original
+            edge_obj = mst_graph.edges[edge_id]
+            
+            # Simulamos el borrado temporal
+            del mst_graph.edges[edge_id]
+            mst_graph.nodes[u_id].edges.remove(edge_obj)
+            mst_graph.nodes[v_id].edges.remove(edge_obj)
+            
+            # RECORRIDO LOCAL: Ejecutamos el BFS desde uno de los extremos de la arista (u_id)
+            arbol_bfs = mst_graph.BFS(u_id)
+            
+            # ESTRATEGIA INMUNE: Si el otro extremo (v_id) YA NO es alcanzable desde u_id,
+            # significa que esta arista era el único puente que los unía. ¡No se puede borrar!
+            if v_id not in arbol_bfs.nodes:
+                # La reinsertamos de inmediato
+                mst_graph.edges[edge_id] = edge_obj
+                mst_graph.nodes[u_id].edges.append(edge_obj)
+                mst_graph.nodes[v_id].edges.append(edge_obj)
+
+        # 4. Calcular costo total
+        costo_total = sum(e.peso for e in mst_graph.edges.values())
+        return mst_graph, costo_total
+    
+    def Prim(self, nodo_inicio=None):
+        if self.tipo != 'Undirected':
+            raise ValueError("El algoritmo de Prim se aplica a grafos no dirigidos.")
+            
+        if not self.nodes:
+            return Graph(tipo='Undirected'), 0
+
+        if nodo_inicio is None:
+            nodo_inicio = list(self.nodes.keys())[0]
+            
+        if nodo_inicio not in self.nodes:
+            raise ValueError(f"El nodo inicial {nodo_inicio} no existe en el grafo.")
+
+        # Inicializar el grafo del MST
+        mst_graph = Graph(tipo='Undirected')
+        mst_graph.add_node(nodo_inicio)
+        
+        # Estructuras de control
+        visitados = set([nodo_inicio])
+        costo_total = 0
+        
+        # La cola de prioridad (heap) guardará tuplas con el formato:
+        # (peso, nodo_origen, nodo_destino, objeto_arista)
+        cola_prioridad = []
+
+        # Función auxiliar para meter al heap las aristas de un nodo recién visitado
+        def registrar_aristas_de(nodo_id):
+            nodo_obj = self.nodes[nodo_id]
+            for edge in nodo_obj.edges: # edge es un objeto de tu clase Edge
+                # Averiguar cuál extremo es el vecino
+                vecino_id = edge.n1.id if edge.n0.id == nodo_id else edge.n0.id
+                if vecino_id not in visitados:
+                    # Empujamos al heap (Python ordena automáticamente por el primer elemento: el peso)
+                    heapq.heappush(cola_prioridad, (edge.peso, nodo_id, vecino_id, edge))
+
+        # Registrar las opciones iniciales desde nuestro punto de partida
+        registrar_aristas_de(nodo_inicio)
+
+        # Bucle principal: expandir la raíz
+        while cola_prioridad and len(visitados) < len(self.nodes):
+            peso, origen, destino, edge_obj = heapq.heappop(cola_prioridad)
+            
+            # Si el nodo destino ya fue visitado por otro camino más barato, ignoramos esta arista
+            if destino in visitados:
+                continue
+                
+            visitados.add(destino)
+            mst_graph.add_node(destino)
+            mst_graph.add_edge(origen, destino, peso=peso)
+            costo_total += peso
+            
+            # Expandimos nuestras opciones agregando las aristas del nuevo nodo descubierto
+            registrar_aristas_de(destino)
+
+        return mst_graph, costo_total

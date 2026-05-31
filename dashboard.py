@@ -352,6 +352,249 @@ def mostrar_seccion_dijkstra():
             use_container_width=True,
             key="btn_descarga_dijkstra"
         )
+        
+
+def mostrar_seccion_kruskalD():
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("### 🌲 Árbol de Expansión Mínima (Kruskal Directo)")
+    st.write("Calcula el árbol de expansión mínima (MST) conectando todos los nodos con el menor peso total posible y sin ciclos.")
+
+    # 1. Validar que exista un grafo en el estado de la sesión
+    if "grafo" not in st.session_state or not st.session_state.grafo or not st.session_state.grafo.nodes:
+        st.info("Genera o importa primero un grafo en la sección superior para poder aplicar Kruskal.")
+        # Limpieza preventiva por si borran el grafo original
+        st.session_state.mst_kruskalD = None
+        return
+
+    grafo_original = st.session_state.grafo
+
+    # Validación extra: Kruskal requiere que el grafo sea no dirigido
+    if grafo_original.tipo != 'Undirected':
+        st.warning("⚠️ El algoritmo de Kruskal requiere un grafo No Dirigido ('Undirected'). Configura el tipo de grafo en la sección superior.")
+        # Limpieza preventiva si cambian a un grafo Directed
+        st.session_state.mst_kruskalD = None
+        return
+
+    # Botón para accionar el algoritmo
+    btn_kruskalD = st.button("🚀 Ejecutar Kruskal Directo", use_container_width=True)
+
+    # 2. Lógica de ejecución al presionar el botón
+    if btn_kruskalD:
+        with st.spinner('Calculando el Árbol de Expansión Mínima...'):
+            mst_grafo, costo_total = grafo_original.KruskalD()
+            
+            # Guardamos los resultados en el session_state
+            st.session_state.mst_kruskalD = mst_grafo
+            st.session_state.costo_kruskalD = costo_total
+            st.session_state.dot_kruskalD = grafo_a_dot(mst_grafo)
+            st.session_state.dot_originalD = grafo_a_dot(grafo_original)
+
+    # 3. Mostrar y renderizar los resultados si existen en sesión
+    if "mst_kruskalD" in st.session_state and st.session_state.mst_kruskalD is not None:
+        mst = st.session_state.mst_kruskalD
+        costo = st.session_state.costo_kruskalD
+
+        st.success("¡Árbol de Expansión Mínima generado de manera exitosa!")
+        
+        # Métricas de control
+        col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.metric(label="💰 Costo Total Mínimo", value=f"{costo}")
+        with col_m2:
+            st.metric(label="📍 Nodos Conectados", value=f"{len(mst.nodes)}")
+        with col_m3:
+            st.metric(label="🛣️ Aristas en el MST", value=f"{len(mst.edges)}")
+
+        # 4. Visualización en paralelo
+        st.markdown("#### 📊 Comparativa de Grafos")
+        col_graf1, col_graf2 = st.columns(2)
+        
+        with col_graf1:
+            st.caption("🌐 Grafo Original (Completo)")
+            st.graphviz_chart(st.session_state.dot_originalD)
+            
+        with col_graf2:
+            st.caption("🌲 Grafo Creado (Árbol de Expansión Mínima)")
+            st.graphviz_chart(st.session_state.dot_kruskalD)
+
+        # 5. Vista previa del código DOT y Descarga
+        with st.expander("📄 Ver vista previa del archivo .dot (KruskalD)"):
+            st.code(st.session_state.dot_kruskalD, language="dot")
+        
+        nombre_archivo_kruskal = "kruskalD_mst_resultado.dot"
+        st.download_button(
+            label=f"⬇️ Descargar {nombre_archivo_kruskal}",
+            data=st.session_state.dot_kruskalD.encode("utf-8"),
+            file_name=nombre_archivo_kruskal,
+            mime="text/plain",
+            use_container_width=True,
+            key="btn_descarga_kruskalD"
+        )
+
+def mostrar_seccion_kruskalI():
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("### 🌲 Árbol de Expansión Mínima (Kruskal Inverso)")
+    st.write("Calcula el árbol de expansión mínima (MST) conectando todos los nodos con el menor peso total posible y sin ciclos.")
+
+    # 1. Validar que exista un grafo en el estado de la sesión
+    if "grafo" not in st.session_state or not st.session_state.grafo or not st.session_state.grafo.nodes:
+        st.info("Genera o importa primero un grafo en la sección superior para poder aplicar Kruskal.")
+        # Limpieza preventiva por si borran el grafo original
+        st.session_state.mst_kruskalI = None
+        return
+
+    grafo_original = st.session_state.grafo
+
+    # Validación extra: Kruskal requiere que el grafo sea no dirigido
+    if grafo_original.tipo != 'Undirected':
+        st.warning("⚠️ El algoritmo de Kruskal requiere un grafo No Dirigido ('Undirected'). Configura el tipo de grafo en la sección superior.")
+        # Limpieza preventiva si cambian a un grafo Directed
+        st.session_state.mst_kruskalI = None
+        return
+
+    # Botón para accionar el algoritmo
+    btn_kruskalI = st.button("🚀 Ejecutar Kruskal Inverso", use_container_width=True)
+
+    # 2. Lógica de ejecución al presionar el botón
+    if btn_kruskalI:
+        with st.spinner('Calculando el Árbol de Expansión Mínima...'):
+            mst_grafo, costo_total = grafo_original.KruskalI()
+            
+            # Guardamos los resultados en el session_state
+            st.session_state.mst_kruskalI = mst_grafo
+            st.session_state.costo_kruskalI = costo_total
+            st.session_state.dot_kruskalI = grafo_a_dot(mst_grafo)
+            st.session_state.dot_originalI = grafo_a_dot(grafo_original)
+
+    # 3. Mostrar y renderizar los resultados si existen en sesión
+    if "mst_kruskalI" in st.session_state and st.session_state.mst_kruskalI is not None:
+        mst = st.session_state.mst_kruskalI
+        costo = st.session_state.costo_kruskalI
+
+        st.success("¡Árbol de Expansión Mínima generado de manera exitosa!")
+        
+        # Métricas de control
+        col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.metric(label="💰 Costo Total Mínimo", value=f"{costo}")
+        with col_m2:
+            st.metric(label="📍 Nodos Conectados", value=f"{len(mst.nodes)}")
+        with col_m3:
+            st.metric(label="🛣️ Aristas en el MST", value=f"{len(mst.edges)}")
+
+        # 4. Visualización en paralelo
+        st.markdown("#### 📊 Comparativa de Grafos")
+        col_graf1, col_graf2 = st.columns(2)
+        
+        with col_graf1:
+            st.caption("🌐 Grafo Original (Completo)")
+            st.graphviz_chart(st.session_state.dot_originalI)
+            
+        with col_graf2:
+            st.caption("🌲 Grafo Creado (Árbol de Expansión Mínima)")
+            st.graphviz_chart(st.session_state.dot_kruskalI)
+
+        # 5. Vista previa del código DOT y Descarga
+        with st.expander("📄 Ver vista previa del archivo .dot (KruskalI)"):
+            st.code(st.session_state.dot_kruskalI, language="dot")
+        
+        nombre_archivo_kruskal = "kruskalI_mst_resultado.dot"
+        st.download_button(
+            label=f"⬇️ Descargar {nombre_archivo_kruskal}",
+            data=st.session_state.dot_kruskalI.encode("utf-8"),
+            file_name=nombre_archivo_kruskal,
+            mime="text/plain",
+            use_container_width=True,
+            key="btn_descarga_kruskalI"
+        )
+
+def mostrar_seccion_prim():
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("### 🌲 Árbol de Expansión Mínima (Algoritmo de Prim)")
+    st.write("Calcula el árbol de expansión mínima (MST) expandiéndose de forma incremental desde un nodo inicial a través de las aristas más baratas.")
+
+    # 1. Validar que exista un grafo en el estado de la sesión
+    if "grafo" not in st.session_state or not st.session_state.grafo or not st.session_state.grafo.nodes:
+        st.info("Genera o importa primero un grafo en la sección superior para poder aplicar Prim.")
+        st.session_state.mst_prim = None
+        return
+
+    grafo_original = st.session_state.grafo
+
+    # Validación: Prim requiere que el grafo sea no dirigido
+    if grafo_original.tipo != 'Undirected':
+        st.warning("⚠️ El algoritmo de Prim requiere un grafo No Dirigido ('Undirected'). Configura el tipo de grafo en la sección superior.")
+        st.session_state.mst_prim = None
+        return
+
+    # Selector para el nodo de inicio (Prim está orientado a nodos y empieza en uno específico)
+    lista_nodos = list(grafo_original.nodes.keys())
+    
+    col_sel1, col_sel2 = st.columns([1, 2])
+    with col_sel1:
+        nodo_inicio = st.selectbox(
+            "Selecciona el nodo inicial:", 
+            options=lista_nodos,
+            key="select_prim"
+        )
+    with col_sel2:
+        st.write("") 
+        st.write("")
+        btn_prim = st.button("🚀 Ejecutar Prim", use_container_width=True)
+
+    # 2. Lógica de ejecución al presionar el botón
+    if btn_prim:
+        with st.spinner('Calculando el Árbol de Expansión Mínima con Prim...'):
+            # Ejecutamos el método que añade las aristas usando el heap de prioridad
+            mst_grafo, costo_total = grafo_original.Prim(nodo_inicio)
+            
+            # Guardamos los resultados en el session_state
+            st.session_state.mst_prim = mst_grafo
+            st.session_state.costo_prim = costo_total
+            st.session_state.dot_prim = grafo_a_dot(mst_grafo)
+            st.session_state.dot_original_prim = grafo_a_dot(grafo_original)
+
+    # 3. Mostrar y renderizar los resultados si existen en sesión
+    if "mst_prim" in st.session_state and st.session_state.mst_prim is not None:
+        mst = st.session_state.mst_prim
+        costo = st.session_state.costo_prim
+
+        st.success(f"¡Árbol de Expansión Mínima generado exitosamente desde el nodo origen: {nodo_inicio}!")
+        
+        # Métricas de control
+        col_m1, col_m2, col_m3 = st.columns(3)
+        with col_m1:
+            st.metric(label="💰 Costo Total Mínimo", value=f"{costo}")
+        with col_m2:
+            st.metric(label="📍 Nodos Conectados", value=f"{len(mst.nodes)}")
+        with col_m3:
+            st.metric(label="🛣️ Aristas en el MST", value=f"{len(mst.edges)}")
+
+        # 4. Visualización en paralelo (Grafo Original vs Grafo Creado/MST)
+        st.markdown("#### 📊 Comparativa de Grafos")
+        col_graf1, col_graf2 = st.columns(2)
+        
+        with col_graf1:
+            st.caption("🌐 Grafo Original (Completo)")
+            st.graphviz_chart(st.session_state.dot_original_prim)
+            
+        with col_graf2:
+            st.caption("🌲 Grafo Creado (Árbol de Expansión Mínima - Prim)")
+            st.graphviz_chart(st.session_state.dot_prim)
+
+        # 5. Vista previa del código DOT y Descarga del archivo
+        with st.expander("📄 Ver vista previa del archivo .dot (Prim)"):
+            st.code(st.session_state.dot_prim, language="dot")
+        
+        nombre_archivo_prim = f"prim_mst_desde_{nodo_inicio}.dot"
+        st.download_button(
+            label=f"⬇️ Descargar {nombre_archivo_prim}",
+            data=st.session_state.dot_prim.encode("utf-8"),
+            file_name=nombre_archivo_prim,
+            mime="text/plain",
+            use_container_width=True,
+            key="btn_descarga_prim"  # Clave única para evitar colisiones
+        )
 
 def cargar_grafo_desde_dot_texto(contenido: str) -> Graph:
     """
@@ -617,6 +860,18 @@ if "dfs_i_root" not in st.session_state: st.session_state.dfs_i_root = None
 if "grafo_dijkstra" not in st.session_state: st.session_state.grafo_dijkstra = None
 if "dot_dijkstra"   not in st.session_state: st.session_state.dot_dijkstra   = ""
 if "root_dijkstra" not in st.session_state: st.session_state.root_dijkstra = None
+if "mst_kruskalD"   not in st.session_state: st.session_state.mst_kruskal   = None
+if "dot_kruskalD"   not in st.session_state: st.session_state.dot_kruskal   = ""
+if "costo_kruskalD" not in st.session_state: st.session_state.costo_kruskal = 0
+if "dot_originalD"  not in st.session_state: st.session_state.dot_original  = ""
+if "mst_kruskalI"   not in st.session_state: st.session_state.mst_kruskal   = None
+if "dot_kruskalI"   not in st.session_state: st.session_state.dot_kruskal   = ""
+if "costo_kruskalI" not in st.session_state: st.session_state.costo_kruskal = 0
+if "dot_originalI"  not in st.session_state: st.session_state.dot_original  = ""
+if "mst_prim"   not in st.session_state: st.session_state.mst_prim   = None
+if "dot_prim"   not in st.session_state: st.session_state.dot_prim   = ""
+if "costo_prim" not in st.session_state: st.session_state.costo_prim = 0
+if "dot_original_prim" not in st.session_state: st.session_state.dot_original_prim = ""
 
 # ────────────────────────────────────────────────────────────────────────────
 # Generación
@@ -737,6 +992,12 @@ elif st.session_state.grafo is not None:
     mostrar_seccion_dfs_i()
     
     mostrar_seccion_dijkstra()
+    
+    mostrar_seccion_kruskalD()
+    
+    mostrar_seccion_kruskalI()
+    
+    mostrar_seccion_prim()
 
 else:
     # Estado vacío
